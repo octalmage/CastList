@@ -1,5 +1,7 @@
 var player;
 var currentUrl = '';
+var playlist = [];
+var listenerAdded = 0;
 
 $(function() {
   player = new CastPlayer();
@@ -49,6 +51,25 @@ function getContentType(url) {
   return "";
 }
 
+function findVideoUrl(url)
+{
+  if (url.indexOf("vodlocker.com")!=-1)
+  {
+    $.getJSON('http://whateverorigin.org/get?url=' + 
+      encodeURIComponent(url) + '&callback=?',
+      function(data) 
+      {
+        var vodreg = /file\: \"(.*)\"/g;
+        var match = vodreg.exec(data.contents);
+        playlistAdd(match[1]);
+      });
+  }
+  else 
+  {
+    playlistAdd(url);
+  }  
+}
+
 function startPlayback() {
   if (player.session == null || $('#url').val().trim() == "") {
     return;
@@ -58,6 +79,36 @@ function startPlayback() {
   player.loadMedia(url, contentType);
   $('#player_now_playing').html(url.split(/[\\/]/).pop());
   $('#controls').show();
+
+  if (!listenerAdded)
+  {
+    listenerAdded=1;
+    player.session.addUpdateListener(function(e) 
+    {
+      if (playlist.length>0)
+      {
+        next();      
+      } 
+    });
+  }
+}
+
+function addToPlaylist()
+{
+  findVideoUrl($("#playlisturl").val());
+  $("#playlisturl").val("");
+}
+
+function playlistAdd(url)
+{
+  playlist.push(url);
+}
+
+function next()
+{
+  var url=playlist.shift();
+  var contentType = getContentType(url);
+  player.loadMedia(url, contentType);
 }
 
 function pause() {
