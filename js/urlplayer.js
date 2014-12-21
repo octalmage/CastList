@@ -53,7 +53,7 @@ function getContentType(url) {
 
 function findVideoUrl(url)
 {
-  if (url.indexOf("vodlocker.com")!=-1)
+  if (url.indexOf("http://vodlocker.com")!=-1)
   {
     $.getJSON('http://whateverorigin.org/get?url=' + 
       encodeURIComponent(url) + '&callback=?',
