@@ -85,7 +85,7 @@ function startPlayback() {
     listenerAdded=1;
     player.session.addUpdateListener(function(e) 
     {
-      if (playlist.length>0)
+      if (playlist.length>0 && player.session.media.length<1)
       {
         next();      
       } 
