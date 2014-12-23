@@ -61,12 +61,12 @@ function findVideoUrl(url)
       {
         var vodreg = /file\: \"(.*)\"/g;
         var match = vodreg.exec(data.contents);
-        playlistAdd(match[1]);
+        play(match[1]);
       });
   }
   else 
   {
-    playlistAdd(url);
+    play(url);
   }  
 }
 
@@ -95,7 +95,7 @@ function startPlayback() {
 
 function addToPlaylist()
 {
-  findVideoUrl($("#playlisturl").val());
+  playlistAdd($("#playlisturl").val());
   $("#playlisturl").val("");
 }
 
@@ -106,7 +106,11 @@ function playlistAdd(url)
 
 function next()
 {
-  var url=playlist.shift();
+  findVideoUrl(playlist.shift());
+}
+
+function play(url)
+{
   var contentType = getContentType(url);
   player.loadMedia(url, contentType);
 }
