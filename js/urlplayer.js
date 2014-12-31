@@ -9,6 +9,33 @@ $(function() {
   if (url) {
     $('#url').val(url);
   }
+
+  //Keyboard controls. 
+  $(document).keydown(function(event) 
+  {
+    //Do nothing if player isn't connected. 
+    if (player.session == null) return;
+    
+    switch (event.which)
+    {
+      case 32: //Space bar.
+        if (player.castPlayerState=="PLAYING") pause(); //Pause if playing. 
+        else if (player.castPlayerState=="PAUSED") resume(); //Play if paused. 
+        break;
+      case 37: //Left arrow.
+        seek(false); //Rewind.
+        break;
+      case 38: //Up arrow.
+        volumeUp(); //Volume up.
+        break;
+      case 39: //Right arrow.
+        seek(true); //Fast forward.
+        break;
+      case 40: //Down arrow.
+        volumeDown(); //Volume down.
+        break;
+    }
+  });
 });
 
 function getUrlParameter(sParam) {
