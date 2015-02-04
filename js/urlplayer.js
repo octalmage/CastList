@@ -82,8 +82,7 @@ function findVideoUrl(url)
 {
   if (url.indexOf("http://vodlocker.com")!=-1)
   {
-    $.getJSON('http://whateverorigin.org/get?url=' + 
-      encodeURIComponent(url) + '&callback=?',
+    $.get(url,
       function(data) 
       {
         var vodreg = /file\: \"(.*)\"/g;
