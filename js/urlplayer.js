@@ -102,8 +102,7 @@ function startPlayback() {
     return;
   }
   var url = decodeURIComponent($('#url').val());
-  var contentType = getContentType(url);
-  player.loadMedia(url, contentType);
+  play(url);
   $('#player_now_playing').html(url.split(/[\\/]/).pop());
   $('#controls').show();
 
