@@ -118,24 +118,6 @@ function getContentType(url)
 	return "";
 }
 
-function findVideoUrl(url)
-{
-	if (url.indexOf("http://vodlocker.com") != -1)
-	{
-		$.get(url,
-			function(data)
-			{
-				var vodreg = /file\: \"(.*)\"/g;
-				var match = vodreg.exec(data.contents);
-				play(match[1]);
-			});
-	}
-	else
-	{
-		play(url);
-	}
-}
-
 function startPlayback()
 {
 	if (player.session == null || $('#url').val().trim() == "")
@@ -143,7 +125,7 @@ function startPlayback()
 		return;
 	}
 	var url = decodeURIComponent($('#url').val());
-	findVideoUrl(url);
+	play(url);
 	$('#player_now_playing').html(url.split(/[\\/]/).pop());
 	$('#controls').show();
 
@@ -173,7 +155,7 @@ function playlistAdd(url)
 
 function next()
 {
-	findVideoUrl(playlist.shift());
+	play(playlist.shift());
 }
 
 function play(url)
