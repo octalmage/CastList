@@ -12,17 +12,17 @@ $(function()
 		$('#url').val(url);
 	}
 
-	//Keyboard controls. 
+	//Keyboard controls.
 	$(document).keydown(function(event)
 	{
-		//Do nothing if player isn't connected. 
+		//Do nothing if player isn't connected.
 		if (player.session == null) return;
 
 		switch (event.which)
 		{
 			case 32: //Space bar.
-				if (player.castPlayerState == "PLAYING") pause(); //Pause if playing. 
-				else if (player.castPlayerState == "PAUSED") resume(); //Play if paused. 
+				if (player.castPlayerState == "PLAYING") pause(); //Pause if playing.
+				else if (player.castPlayerState == "PAUSED") resume(); //Play if paused.
 				break;
 			case 37: //Left arrow.
 				seek(false); //Rewind.
